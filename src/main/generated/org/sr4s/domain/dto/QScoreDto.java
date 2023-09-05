@@ -17,5 +17,9 @@ public class QScoreDto extends ConstructorExpression<ScoreDto> {
         super(ScoreDto.class, new Class<?>[]{String.class, int.class}, cntryCd, score);
     }
 
+    public QScoreDto(com.querydsl.core.types.Expression<String> cntryCd, com.querydsl.core.types.Expression<Integer> score, com.querydsl.core.types.Expression<String> userNm) {
+        super(ScoreDto.class, new Class<?>[]{String.class, int.class, String.class}, cntryCd, score, userNm);
+    }
+
 }
 

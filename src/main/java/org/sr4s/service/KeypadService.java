@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.sr4s.domain.common.Response;
 import org.sr4s.domain.dto.KeypadDto;
 import org.sr4s.domain.dto.ThemeDto;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class KeypadService {
     private final KeypadRepository keypadRepository;
-
+    @Transactional
     public Response<Object> getKeypadList() {
         List<Keypad> keypads = keypadRepository.findAll();
         List<KeypadDto> keypadList = keypads.stream()
@@ -30,6 +31,7 @@ public class KeypadService {
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)
+                .message("SUCCESS")
                 .data(keypadList)
                 .build();
     }

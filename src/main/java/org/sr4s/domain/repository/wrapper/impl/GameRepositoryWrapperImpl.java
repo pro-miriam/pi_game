@@ -35,7 +35,6 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
                 .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
                 .limit(8)
                 .fetch();
-
         return result;
     }
 
@@ -47,6 +46,17 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
                 .where(isCntryCd(cntryCd))
                 .groupBy(user.cntryCd)
                 .fetchOne();
+        return result;
+    }
+
+    @Override
+    public List<ScoreDto> findScoreList() {
+        List<ScoreDto> result = query.select(new QScoreDto(user.cntryCd, game.score, user.userNm))
+                .from(game)
+                .leftJoin(game.user, user)
+                .orderBy(game.score.desc(), game.updateDt.asc())
+                .limit(100)
+                .fetch();
         return result;
     }
 

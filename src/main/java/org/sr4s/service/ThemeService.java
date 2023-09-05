@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.sr4s.domain.common.Response;
 import org.sr4s.domain.dto.ThemeDto;
 import org.sr4s.domain.entity.Theme;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class ThemeService {
 
     private final ThemeRepository themeRepository;
-
+    @Transactional
     public Response<Object> getThemeList() {
         List<Theme> themes = themeRepository.findAll();
         List<ThemeDto> themeList = themes.stream()
@@ -28,6 +29,7 @@ public class ThemeService {
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)
+                .message("SUCCESS")
                 .data(themeList)
                 .build();
     }

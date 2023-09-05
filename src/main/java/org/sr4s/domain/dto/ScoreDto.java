@@ -15,9 +15,18 @@ import java.time.LocalDateTime;
 public class ScoreDto {
     private String cntryCd;
     private int score;
+    private String userNm;
+
     @QueryProjection
     public ScoreDto(String cntryCd, int score) {
         this.cntryCd = cntryCd;
         this.score = score;
+    }
+
+    @QueryProjection
+    public ScoreDto(String cntryCd, int score, String userNm) {
+        this.cntryCd = cntryCd;
+        this.score = score;
+        this.userNm = userNm;
     }
 }

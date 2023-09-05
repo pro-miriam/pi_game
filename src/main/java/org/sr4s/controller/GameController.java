@@ -31,4 +31,9 @@ public class GameController {
         return gameService.getCntryScore(cntryCd);
     }
 
+    @GetMapping("/score/list")
+    public Response<Object> getScoreList() {
+        return gameService.getScoreList();
+    }
+
 }

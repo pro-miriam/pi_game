@@ -7,4 +7,5 @@ import java.util.List;
 public interface GameRepositoryWrapper {
     List<ScoreDto> findCntryScoreList();
     ScoreDto findCntryScore(String cntryCd);
+    List<ScoreDto> findScoreList();
 }

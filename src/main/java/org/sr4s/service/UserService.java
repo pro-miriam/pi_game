@@ -39,6 +39,7 @@ public class UserService {
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)
+                .message("SUCCESS")
                 .data(userEntity)
                 .build();
     }

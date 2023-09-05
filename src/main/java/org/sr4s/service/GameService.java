@@ -60,4 +60,14 @@ public class GameService {
                 .message("SUCCESS")
                 .build();
     }
+    @Transactional
+    public Response<Object> getScoreList() {
+        List<ScoreDto> score = gameRepositoryWrapper.findScoreList();
+        return new Response<>().builder()
+                .code(HttpStatus.OK.value())
+                .httpStatus(HttpStatus.OK)
+                .data(score)
+                .message("SUCCESS")
+                .build();
+    }
 }
