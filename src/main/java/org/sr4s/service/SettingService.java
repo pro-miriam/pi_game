@@ -54,8 +54,9 @@ public class SettingService {
     @Transactional
     public Response<Object> setSetting(SettingDto request) {
         Setting setting  = settingRepository.findOneByUser(userRepository.findOneByUserSeq(request.getUserSeq()));
-        setting.setKeypad(keypadRepository.findOneByKeypadSeq(request.getKeypadSeq()));
-        setting.setTheme(themeRepository.findOneByThemeSeq(request.getThemeSeq()));
+//        setting.setKeypad(keypadRepository.findOneByKeypadSeq(request.getKeypadSeq()));
+//        setting.setTheme(themeRepository.findOneByThemeSeq(request.getThemeSeq()));
+        setting.updateSetting(keypadRepository.findOneByKeypadSeq(request.getKeypadSeq()), themeRepository.findOneByThemeSeq(request.getThemeSeq()));
 
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
