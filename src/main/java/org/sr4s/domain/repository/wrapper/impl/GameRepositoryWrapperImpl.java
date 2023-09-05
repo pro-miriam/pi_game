@@ -60,6 +60,18 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
         return result;
     }
 
+    @Override
+    public List<ScoreDto> findScoreListByCntryCd(String cntryCd) {
+        List<ScoreDto> result = query.select(new QScoreDto(game.score, user.userNm))
+                .from(game)
+                .leftJoin(game.user, user)
+                .where(isCntryCd(cntryCd))
+                .orderBy(game.score.desc(), game.updateDt.asc())
+                .limit(100)
+                .fetch();
+        return null;
+    }
+
     private BooleanExpression isCntryCd(String cntryCd) {
         return StringUtils.hasText(cntryCd) ? user.cntryCd.eq(cntryCd) : null;
     }

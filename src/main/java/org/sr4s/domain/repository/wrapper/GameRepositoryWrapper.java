@@ -8,4 +8,5 @@ public interface GameRepositoryWrapper {
     List<ScoreDto> findCntryScoreList();
     ScoreDto findCntryScore(String cntryCd);
     List<ScoreDto> findScoreList();
+    List<ScoreDto> findScoreListByCntryCd(String cntryCd);
 }

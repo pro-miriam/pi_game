@@ -30,10 +30,14 @@ public class GameController {
     public Response<Object> getCntryScore(@PathVariable(value = "cntryCd") String cntryCd) {
         return gameService.getCntryScore(cntryCd);
     }
-
     @GetMapping("/score/list")
     public Response<Object> getScoreList() {
         return gameService.getScoreList();
+    }
+
+    @GetMapping("/score/list/{cntryCd}")
+    public Response<Object> getScoreListByCntryCd(@PathVariable(value = "cntryCd") String cntryCd) {
+        return gameService.getScoreListByCntryCd(cntryCd);
     }
 
 }

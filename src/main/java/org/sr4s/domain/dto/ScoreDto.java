@@ -29,4 +29,10 @@ public class ScoreDto {
         this.score = score;
         this.userNm = userNm;
     }
+
+    @QueryProjection
+    public ScoreDto(int score, String userNm) {
+        this.score = score;
+        this.userNm = userNm;
+    }
 }

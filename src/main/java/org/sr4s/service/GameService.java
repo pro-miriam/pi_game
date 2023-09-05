@@ -70,4 +70,14 @@ public class GameService {
                 .message("SUCCESS")
                 .build();
     }
+    @Transactional
+    public Response<Object> getScoreListByCntryCd(String cntryCd) {
+        List<ScoreDto> score = gameRepositoryWrapper.findScoreListByCntryCd(cntryCd);
+        return new Response<>().builder()
+                .code(HttpStatus.OK.value())
+                .httpStatus(HttpStatus.OK)
+                .data(score)
+                .message("SUCCESS")
+                .build();
+    }
 }
