@@ -20,7 +20,8 @@ public class Purchase extends CommonEntity{
                     generator = "PURCHASE_SEQ_GENERATOR")
     private Long uuid;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_seq")
     private UserMaster user;
 
     @Column(nullable = false)

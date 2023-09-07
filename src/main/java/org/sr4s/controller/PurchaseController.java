@@ -5,10 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.sr4s.domain.common.Response;
 import org.sr4s.domain.dto.PurchaseDto;
-import org.sr4s.domain.dto.UserMasterDto;
-import org.sr4s.domain.entity.Purchase;
 import org.sr4s.service.PurchaseService;
-import org.sr4s.service.UserService;
 
 @RestController
 @RequestMapping(value = "/api/v1/purchase")
