@@ -31,9 +31,10 @@ public class Setting extends CommonEntity{
     @JoinColumn(name = "theme_seq")
     private Theme theme;
 
+    private String adsYn;
+
     public void updateSetting (Keypad keypad, Theme theme) {
         this.keypad = keypad;
         this.theme = theme;
     }
-
 }

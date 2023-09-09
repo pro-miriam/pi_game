@@ -24,6 +24,8 @@ public class QSetting extends EntityPathBase<Setting> {
 
     public final QCommonEntity _super = new QCommonEntity(this);
 
+    public final StringPath adsYn = createString("adsYn");
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createDt = _super.createDt;
 

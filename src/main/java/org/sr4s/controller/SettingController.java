@@ -20,7 +20,22 @@ public class SettingController {
         return settingService.getSetting(userSeq);
     }
 
-    @PutMapping("/set")
+    @PutMapping("/keypad")
+    public Response<Object> applyKeypad(@RequestParam("userSeq") Long userSeq, @RequestParam("keypadSeq") Long keypadSeq) {
+        return settingService.applyKeypad(userSeq, keypadSeq);
+    }
+
+    @PutMapping("/theme")
+    public Response<Object> applyTheme(@RequestParam("userSeq") Long userSeq, @RequestParam("themeSeq") Long themeSeq) {
+        return settingService.applyTheme(userSeq, themeSeq);
+    }
+
+    @PutMapping("/ads")
+    public Response<Object> removeAds(@RequestParam("userSeq") Long userSeq) {
+        return settingService.removeAds(userSeq);
+    }
+
+    @PutMapping("/update")
     public Response<Object> setSetting(@RequestBody SettingDto request) {
         return settingService.setSetting(request);
     }

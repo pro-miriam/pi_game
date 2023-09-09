@@ -19,4 +19,6 @@ public class SettingDto {
     private Long keypadSeq;
 
     private Long themeSeq;
+
+    private String adsYn;
 }
