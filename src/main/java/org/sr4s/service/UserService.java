@@ -25,14 +25,18 @@ public class UserService {
 
     @Transactional
     public Response<Object> createUser(UserMasterDto user) {
-        UserMaster userEntity = userRepository.findOneByUuid(user.getUuid()).orElseGet(() -> user.dtoToEntity());
-        //UserMaster userEntity = user.dtoToEntity();
-        userEntity = userRepository.save(userEntity);
 
-        Setting settingEntity = Setting.builder()
-                                        .user(userEntity)
-                                        .build();
-        settingRepository.save(settingEntity);
+        UserMaster userEntity = userRepository.findOneByUuid(user.getUuid());
+
+        if (userEntity == null) {
+            userEntity = user.dtoToEntity();
+            userEntity = userRepository.save(userEntity);
+
+            Setting settingEntity = Setting.builder()
+                                            .user(userEntity)
+                                            .build();
+            settingRepository.save(settingEntity);
+        }
 
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
