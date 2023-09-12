@@ -36,6 +36,8 @@ public class QUserMaster extends EntityPathBase<UserMaster> {
 
     public final NumberPath<Long> userSeq = createNumber("userSeq", Long.class);
 
+    public final StringPath uuid = createString("uuid");
+
     public QUserMaster(String variable) {
         super(UserMaster.class, forVariable(variable));
     }

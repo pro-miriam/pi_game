@@ -1,6 +1,7 @@
 package org.sr4s.domain.entity;
 
 import lombok.*;
+import org.sr4s.domain.dto.UserMasterDto;
 
 import javax.persistence.*;
 
@@ -25,5 +26,8 @@ public class UserMaster extends CommonEntity{
 
     @Column(nullable = false)
     private String cntryCd;
+
+    @Column(nullable = false)
+    private String uuid;
     
 }

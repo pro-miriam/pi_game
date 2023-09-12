@@ -8,6 +8,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserMaster, Long> {
 
-    //Optional<UserMaster> findOneByUserSeq(Long userSeq);
+    Optional<UserMaster> findOneByUuid(String uuid);
     UserMaster findOneByUserSeq(Long userSeq);
 }

@@ -25,10 +25,8 @@ public class UserService {
 
     @Transactional
     public Response<Object> createUser(UserMasterDto user) {
-        UserMaster userEntity = UserMaster.builder()
-                                    .userNm(user.getUserNm())
-                                    .cntryCd(user.getCntryCd())
-                                    .build();
+        UserMaster userEntity = userRepository.findOneByUuid(user.getUuid()).orElseGet(() -> user.dtoToEntity());
+        //UserMaster userEntity = user.dtoToEntity();
         userEntity = userRepository.save(userEntity);
 
         Setting settingEntity = Setting.builder()
