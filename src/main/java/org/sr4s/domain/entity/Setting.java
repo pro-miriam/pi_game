@@ -3,12 +3,15 @@ package org.sr4s.domain.entity;
 import javax.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Entity
+@DynamicInsert
 @SequenceGenerator(
         name = "SETTING_SEQ_GENERATOR",
         sequenceName = "setting_seq",

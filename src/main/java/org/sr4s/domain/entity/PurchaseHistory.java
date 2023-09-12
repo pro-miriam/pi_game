@@ -2,6 +2,7 @@ package org.sr4s.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
+@DynamicInsert
 @Table(name = "purchase_hist")
 @SequenceGenerator(
         name = "HIST_SEQ_GENERATOR",
