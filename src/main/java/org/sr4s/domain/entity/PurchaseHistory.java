@@ -1,6 +1,7 @@
 package org.sr4s.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,6 +36,7 @@ public class PurchaseHistory extends CommonEntity{
 
     private String orderId;
 
+    @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private LocalDateTime purchaseDt;
 
 }

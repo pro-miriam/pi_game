@@ -2,6 +2,7 @@ package org.sr4s.domain.entity;
 
 import javax.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -31,6 +32,7 @@ public class Setting extends CommonEntity{
     @JoinColumn(name = "theme_seq")
     private Theme theme;
 
+    @ColumnDefault(value = "Y")
     private String adsYn;
 
     public void updateSetting (Keypad keypad, Theme theme) {
