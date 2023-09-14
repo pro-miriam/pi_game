@@ -25,7 +25,6 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
         super(QGameResult.class);
         this.query = queryFactory;
     }
-
     @Override
     public List<ScoreDto> findCntryScoreList() {
         List<ScoreDto> result = query.select(new QScoreDto(user.cntryCd, game.score.sum()))
@@ -33,10 +32,16 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
                 .leftJoin(game.user, user)
                 .groupBy(user.cntryCd)
                 .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
-                .limit(8)
                 .fetch();
         return result;
     }
+
+    /*@Override
+    public List<ScoreDto> findCntryScoreList() {
+        List<ScoreDto> result = findAllCntryScoreList();
+        result.stream().limit(8);
+        return result;
+    }*/
 
     @Override
     public ScoreDto findCntryScore(String cntryCd) {
@@ -62,11 +67,12 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     @Override
     public List<ScoreDto> findScoreListByCntryCd(String cntryCd) {
-        List<ScoreDto> result = query.select(new QScoreDto(game.score, user.userNm))
+        List<ScoreDto> result = query.select(new QScoreDto(game.score.sum(), user.userNm, user.userSeq))
                 .from(game)
                 .leftJoin(game.user, user)
+                .groupBy(user.userSeq)
                 .where(isCntryCd(cntryCd))
-                .orderBy(game.score.desc(), game.updateDt.asc())
+                .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
                 .limit(100)
                 .fetch();
         return result;

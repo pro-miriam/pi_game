@@ -21,20 +21,34 @@ public class GameController {
         return gameService.createScore(score);
     }
 
+
+    /**
+     * 8위까지 국가 랭킹 리스트
+     */
     @GetMapping("/score/cntry")
     public Response<Object> getCntryScoreList() {
         return gameService.getCntryScoreList();
     }
 
+    /**
+     * 내 국가 랭킹
+     */
     @GetMapping("/score/{cntryCd}")
     public Response<Object> getCntryScore(@PathVariable(value = "cntryCd") String cntryCd) {
         return gameService.getCntryScore(cntryCd);
     }
+
+    /**
+     * 전체 개인 랭킹 리스트
+     */
     @GetMapping("/score/list")
     public Response<Object> getScoreList() {
         return gameService.getScoreList();
     }
 
+    /**
+     * 국가 내 개인 랭킹
+     */
     @GetMapping("/score/list/{cntryCd}")
     public Response<Object> getScoreListByCntryCd(@PathVariable(value = "cntryCd") String cntryCd) {
         return gameService.getScoreListByCntryCd(cntryCd);

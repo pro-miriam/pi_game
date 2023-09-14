@@ -12,10 +12,13 @@ import java.time.LocalDateTime;
 @Builder
 @Accessors(chain=true)
 @NoArgsConstructor
+@AllArgsConstructor
 public class ScoreDto {
     private String cntryCd;
     private int score;
     private String userNm;
+    private int ranking;
+    private Long userSeq;
 
     @QueryProjection
     public ScoreDto(String cntryCd, int score) {
@@ -31,8 +34,9 @@ public class ScoreDto {
     }
 
     @QueryProjection
-    public ScoreDto(int score, String userNm) {
+    public ScoreDto(int score, String userNm, Long userSeq) {
         this.score = score;
         this.userNm = userNm;
+        this.userSeq = userSeq;
     }
 }

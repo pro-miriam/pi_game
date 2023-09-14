@@ -14,6 +14,8 @@ import org.sr4s.domain.repository.UserRepository;
 import org.sr4s.domain.repository.wrapper.GameRepositoryWrapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +45,7 @@ public class GameService {
     @Transactional
     public Response<Object> getCntryScoreList() {
         List<ScoreDto> cntryScoreList = gameRepositoryWrapper.findCntryScoreList();
+        cntryScoreList.stream().limit(8).collect(Collectors.toList());
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)
@@ -52,7 +55,18 @@ public class GameService {
     }
     @Transactional
     public Response<Object> getCntryScore(String cntryCd) {
-        ScoreDto score = gameRepositoryWrapper.findCntryScore(cntryCd);
+        List<ScoreDto> scoreList = gameRepositoryWrapper.findCntryScoreList();
+        //ScoreDto score = scoreList.stream().filter(data -> cntryCd.equals(data.getCntryCd())).findFirst().orElse(null);
+        ScoreDto score = IntStream.range(0, scoreList.size())
+                .filter(i -> scoreList.get(i).getCntryCd().equals(cntryCd))
+                .mapToObj(i -> {
+                    ScoreDto dto = scoreList.get(i);
+                    dto.setRanking(i + 1);
+                    return dto;
+                })
+                .findFirst()
+                .orElse(null);
+
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)

@@ -23,8 +23,8 @@ public class QScoreDto extends ConstructorExpression<ScoreDto> {
         super(ScoreDto.class, new Class<?>[]{String.class, int.class, String.class}, cntryCd, score, userNm);
     }
 
-    public QScoreDto(NumberExpression<Integer> score, StringExpression userNm) {
-        super(ScoreDto.class, new Class<?>[]{int.class, String.class}, score, userNm);
+    public QScoreDto(NumberExpression<Integer> score, StringExpression userNm, NumberExpression<Long> userSeq) {
+        super(ScoreDto.class, new Class<?>[]{int.class, String.class, long.class}, score, userNm, userSeq);
     }
 
 }
