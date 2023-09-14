@@ -69,7 +69,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
                 .orderBy(game.score.desc(), game.updateDt.asc())
                 .limit(100)
                 .fetch();
-        return null;
+        return result;
     }
 
     private BooleanExpression isCntryCd(String cntryCd) {
