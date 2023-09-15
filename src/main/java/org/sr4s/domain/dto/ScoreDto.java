@@ -27,10 +27,11 @@ public class ScoreDto {
     }
 
     @QueryProjection
-    public ScoreDto(String cntryCd, int score, String userNm) {
+    public ScoreDto(String cntryCd, int score, String userNm, Long userSeq) {
         this.cntryCd = cntryCd;
         this.score = score;
         this.userNm = userNm;
+        this.userSeq = userSeq;
     }
 
     @QueryProjection

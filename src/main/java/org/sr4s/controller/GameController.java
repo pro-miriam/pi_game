@@ -49,9 +49,10 @@ public class GameController {
     /**
      * 국가 내 개인 랭킹
      */
-    @GetMapping("/score/list/{cntryCd}")
-    public Response<Object> getScoreListByCntryCd(@PathVariable(value = "cntryCd") String cntryCd) {
-        return gameService.getScoreListByCntryCd(cntryCd);
+    @GetMapping("/score/user")
+    public Response<Object> getUserScore(@RequestParam(value = "cntryCd") String cntryCd
+                                                , @RequestParam(value = "userSeq", required = false) Long userSeq) {
+        return gameService.getUserScore(cntryCd, userSeq);
     }
 
 }

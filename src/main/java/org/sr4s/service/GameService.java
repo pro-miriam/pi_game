@@ -85,8 +85,8 @@ public class GameService {
                 .build();
     }
     @Transactional
-    public Response<Object> getScoreListByCntryCd(String cntryCd) {
-        List<ScoreDto> score = gameRepositoryWrapper.findScoreListByCntryCd(cntryCd);
+    public Response<Object> getUserScore(String cntryCd, Long userSeq) {
+        List<ScoreDto> score = gameRepositoryWrapper.findUserScore(cntryCd, userSeq);
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)

@@ -13,6 +13,7 @@ import org.sr4s.domain.entity.QUserMaster;
 import org.sr4s.domain.repository.wrapper.GameRepositoryWrapper;
 
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport implements GameRepositoryWrapper {
@@ -56,7 +57,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     @Override
     public List<ScoreDto> findScoreList() {
-        List<ScoreDto> result = query.select(new QScoreDto(user.cntryCd, game.score, user.userNm))
+        List<ScoreDto> result = query.select(new QScoreDto(user.cntryCd, game.score, user.userNm, user.userSeq))
                 .from(game)
                 .leftJoin(game.user, user)
                 .orderBy(game.score.desc(), game.updateDt.asc())
@@ -66,12 +67,13 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
     }
 
     @Override
-    public List<ScoreDto> findScoreListByCntryCd(String cntryCd) {
+    public List<ScoreDto> findUserScore(String cntryCd, Long userSeq) {
         List<ScoreDto> result = query.select(new QScoreDto(game.score.sum(), user.userNm, user.userSeq))
                 .from(game)
                 .leftJoin(game.user, user)
                 .groupBy(user.userSeq)
                 .where(isCntryCd(cntryCd))
+                .where(isUserSeq(userSeq))
                 .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
                 .limit(100)
                 .fetch();
@@ -80,5 +82,9 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     private BooleanExpression isCntryCd(String cntryCd) {
         return StringUtils.hasText(cntryCd) ? user.cntryCd.eq(cntryCd) : null;
+    }
+
+    private BooleanExpression isUserSeq(Long userSeq) {
+        return Objects.isNull(userSeq) ? null : user.userSeq.eq(userSeq);
     }
 }
