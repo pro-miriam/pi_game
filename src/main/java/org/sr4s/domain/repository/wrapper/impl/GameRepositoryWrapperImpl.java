@@ -61,7 +61,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
                 .from(game)
                 .leftJoin(game.user, user)
                 .orderBy(game.score.desc(), game.updateDt.asc())
-                .limit(100)
+                .limit(101)
                 .fetch();
         return result;
     }
@@ -75,7 +75,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
                 .where(isCntryCd(cntryCd))
                 .where(isUserSeq(userSeq))
                 .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
-                .limit(100)
+                .limit(101)
                 .fetch();
         return result;
     }
