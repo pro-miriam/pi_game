@@ -1,6 +1,10 @@
 package org.sr4s.domain.repository.wrapper.impl;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.SimpleExpression;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -12,8 +16,10 @@ import org.sr4s.domain.entity.QGameResult;
 import org.sr4s.domain.entity.QUserMaster;
 import org.sr4s.domain.repository.wrapper.GameRepositoryWrapper;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport implements GameRepositoryWrapper {
@@ -21,6 +27,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     QGameResult game = QGameResult.gameResult;
     QUserMaster user = QUserMaster.userMaster;
+    LocalDate today = LocalDate.now();
 
     public GameRepositoryWrapperImpl(JPAQueryFactory queryFactory) {
         super(QGameResult.class);
@@ -31,6 +38,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
         List<ScoreDto> result = query.select(new QScoreDto(user.cntryCd, game.score.sum()))
                 .from(game)
                 .leftJoin(game.user, user)
+                .where(game.createDt.between(today.atStartOfDay(), today.plusDays(1).atStartOfDay()))
                 .groupBy(user.cntryCd)
                 .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
                 .fetch();

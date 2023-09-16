@@ -44,7 +44,7 @@ public class GameService {
     }
     @Transactional
     public Response<Object> getCntryScoreList() {
-        List<ScoreDto> cntryScoreList = gameRepositoryWrapper.findCntryScoreList();
+        List<ScoreDto> cntryScoreList = gameRepository.findCntryScoreList();
         cntryScoreList.stream().limit(8).collect(Collectors.toList());
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
@@ -55,7 +55,7 @@ public class GameService {
     }
     @Transactional
     public Response<Object> getCntryScore(String cntryCd) {
-        List<ScoreDto> scoreList = gameRepositoryWrapper.findCntryScoreList();
+        List<ScoreDto> scoreList = gameRepository.findCntryScoreList();
         //ScoreDto score = scoreList.stream().filter(data -> cntryCd.equals(data.getCntryCd())).findFirst().orElse(null);
         ScoreDto score = IntStream.range(0, scoreList.size())
                 .filter(i -> scoreList.get(i).getCntryCd().equals(cntryCd))

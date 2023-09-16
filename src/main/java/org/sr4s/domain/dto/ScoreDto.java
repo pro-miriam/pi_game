@@ -20,11 +20,18 @@ public class ScoreDto {
     private int ranking;
     private Long userSeq;
 
+    // 이 생성자가 필요합니다.
+    public ScoreDto(int score, String cntryCd) {
+        this.cntryCd = cntryCd;
+        this.score = score;
+    }
+
     @QueryProjection
     public ScoreDto(String cntryCd, int score) {
         this.cntryCd = cntryCd;
         this.score = score;
     }
+
 
     @QueryProjection
     public ScoreDto(String cntryCd, int score, String userNm, Long userSeq) {
