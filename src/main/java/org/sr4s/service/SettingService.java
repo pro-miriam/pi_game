@@ -43,6 +43,7 @@ public class SettingService {
                 .userSeq(user.getUserSeq())
                 .keypadSeq(ObjectUtils.isEmpty(setting.getKeypad()) ? null : setting.getKeypad().getKeypadSeq())
                 .themeSeq(ObjectUtils.isEmpty(setting.getTheme()) ? null : setting.getTheme().getThemeSeq())
+                .adsYn(setting.getAdsYn())
                 .build();
 
 

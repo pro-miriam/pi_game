@@ -2,16 +2,18 @@ package org.sr4s.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 @MappedSuperclass
 @DynamicInsert
 public class CommonEntity {
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private LocalDateTime createDt;
-    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    @UpdateTimestamp
     private LocalDateTime updateDt;
     @ColumnDefault(value = "false")
     private boolean deleted;
