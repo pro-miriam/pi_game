@@ -29,5 +29,14 @@ public class UserMaster extends CommonEntity{
 
     @Column(nullable = false)
     private String uuid;
+
+    public UserMasterDto EntityToDto() {
+        return UserMasterDto.builder()
+                .userNm(this.userNm)
+                .cntryCd(this.cntryCd)
+                .uuid(this.uuid)
+                .userSeq(this.userSeq)
+                .build();
+    }
     
 }

@@ -16,7 +16,10 @@ import org.sr4s.domain.entity.QGameResult;
 import org.sr4s.domain.entity.QUserMaster;
 import org.sr4s.domain.repository.wrapper.GameRepositoryWrapper;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -27,7 +30,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     QGameResult game = QGameResult.gameResult;
     QUserMaster user = QUserMaster.userMaster;
-    LocalDate today = LocalDate.now();
+    LocalDate today = ZonedDateTime.now(ZoneId.of("UTC")).toLocalDate();
 
     public GameRepositoryWrapperImpl(JPAQueryFactory queryFactory) {
         super(QGameResult.class);
@@ -54,7 +57,7 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     @Override
     public ScoreDto findCntryScore(String cntryCd) {
-        ScoreDto result = query.select(new QScoreDto(user.cntryCd, game.score.sum()))
+        ScoreDto result = query.select(new QScoreDto(user.cntryCd, game.score.max()))
                 .from(game)
                 .leftJoin(game.user, user)
                 .where(isCntryCd(cntryCd))
@@ -68,7 +71,8 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
         List<ScoreDto> result = query.select(new QScoreDto(user.cntryCd, game.score, user.userNm, user.userSeq))
                 .from(game)
                 .leftJoin(game.user, user)
-                .orderBy(game.score.desc(), game.updateDt.asc())
+                .where(game.createDt.between(today.atStartOfDay(), today.plusDays(1).atStartOfDay()))
+                .orderBy(game.score.desc(), game.createDt.asc())
                 .limit(101)
                 .fetch();
         return result;
@@ -76,13 +80,14 @@ public class GameRepositoryWrapperImpl extends QuerydslRepositorySupport impleme
 
     @Override
     public List<ScoreDto> findUserScore(String cntryCd, Long userSeq) {
-        List<ScoreDto> result = query.select(new QScoreDto(game.score.sum(), user.userNm, user.userSeq))
+        List<ScoreDto> result = query.select(new QScoreDto(game.score.max(), user.userNm, user.userSeq))
                 .from(game)
                 .leftJoin(game.user, user)
                 .groupBy(user.userSeq)
                 .where(isCntryCd(cntryCd))
                 .where(isUserSeq(userSeq))
-                .orderBy(game.score.sum().desc(), game.updateDt.max().asc())
+                .where(game.createDt.between(today.atStartOfDay(), today.plusDays(1).atStartOfDay()))
+                .orderBy(game.score.max().desc(), game.createDt.max().asc())
                 .limit(101)
                 .fetch();
         return result;

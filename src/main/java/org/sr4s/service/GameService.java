@@ -10,6 +10,7 @@ import org.sr4s.domain.dto.GameResultDto;
 import org.sr4s.domain.dto.ScoreDto;
 import org.sr4s.domain.entity.GameResult;
 import org.sr4s.domain.repository.GameRepository;
+import org.sr4s.domain.repository.ScoreRepository;
 import org.sr4s.domain.repository.UserRepository;
 import org.sr4s.domain.repository.wrapper.GameRepositoryWrapper;
 
@@ -23,6 +24,8 @@ import java.util.stream.IntStream;
 public class GameService {
 
     private final GameRepository gameRepository;
+
+    private final ScoreRepository scoreRepository;
 
     private final UserRepository userRepository;
 
@@ -44,7 +47,7 @@ public class GameService {
     }
     @Transactional
     public Response<Object> getCntryScoreList() {
-        List<ScoreDto> cntryScoreList = gameRepository.findCntryScoreList();
+        List<ScoreDto> cntryScoreList = scoreRepository.findCntryScoreList();
         cntryScoreList.stream().limit(8).collect(Collectors.toList());
         return new Response<>().builder()
                 .code(HttpStatus.OK.value())
@@ -55,7 +58,7 @@ public class GameService {
     }
     @Transactional
     public Response<Object> getCntryScore(String cntryCd) {
-        List<ScoreDto> scoreList = gameRepository.findCntryScoreList();
+        List<ScoreDto> scoreList = scoreRepository.findCntryScoreList();
         //ScoreDto score = scoreList.stream().filter(data -> cntryCd.equals(data.getCntryCd())).findFirst().orElse(null);
         ScoreDto score = IntStream.range(0, scoreList.size())
                 .filter(i -> scoreList.get(i).getCntryCd().equals(cntryCd))

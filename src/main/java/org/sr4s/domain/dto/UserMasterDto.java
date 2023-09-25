@@ -11,7 +11,7 @@ import org.sr4s.domain.entity.UserMaster;
 @AllArgsConstructor
 public class UserMasterDto {
 
-    private String userSeq;
+    private Long userSeq;
 
     private String userNm;
 
@@ -24,6 +24,7 @@ public class UserMasterDto {
                 .userNm(this.userNm)
                 .cntryCd(this.cntryCd)
                 .uuid(this.uuid)
+                .userSeq(this.userSeq)
                 .build();
     }
     

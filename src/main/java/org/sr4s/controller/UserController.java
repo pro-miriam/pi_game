@@ -2,10 +2,7 @@ package org.sr4s.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.sr4s.domain.common.Response;
 import org.sr4s.domain.dto.UserMasterDto;
 import org.sr4s.service.UserService;
@@ -23,4 +20,8 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @GetMapping("/get/{uuid}")
+    public Response<Object> getUserInfo(@PathVariable(value = "uuid") String uuid) {
+        return userService.getUserInfo(uuid);
+    }
 }

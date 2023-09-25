@@ -25,7 +25,6 @@ public class UserService {
 
     @Transactional
     public Response<Object> createUser(UserMasterDto user) {
-
         UserMaster userEntity = userRepository.findOneByUuid(user.getUuid());
 
         if (userEntity == null) {
@@ -42,7 +41,21 @@ public class UserService {
                 .code(HttpStatus.OK.value())
                 .httpStatus(HttpStatus.OK)
                 .message("SUCCESS")
-                .data(userEntity)
+                .data(userEntity.EntityToDto())
+                .build();
+    }
+
+    @Transactional
+    public Response<Object> getUserInfo(String uuid) {
+        UserMaster userEntity = userRepository.findOneByUuid(uuid);
+
+        UserMasterDto userDto = userEntity.EntityToDto();
+
+        return new Response<>().builder()
+                .code(HttpStatus.OK.value())
+                .httpStatus(HttpStatus.OK)
+                .message("SUCCESS")
+                .data(userDto)
                 .build();
     }
 }
